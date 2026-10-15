@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Paiements - SkyReserve</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="layout">
+    <div id="sidebarContainer"></div>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div>
+                <h1>Mes paiements</h1>
+                <p>Voici l’historique de tous vos paiements enregistrés.</p>
+            </div>
+            <a href="dashboardUtilisateur.html" class="btn btn-secondary">Retour dashboard</a>
+        </div>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Historique des paiements</h2>
+            </div>
+            <div id="paiementsList" class="grid-3"></div>
+        </section>
+    </main>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script>
+if (!requireUserAuth()) {}
+const userId = getUserSession()?.id;
+document.getElementById('sidebarContainer').innerHTML = createSidebar('paiements');
+
+async function chargerPaiements() {
+  const zone = document.getElementById('paiementsList');
+  try {
+    const paiements = await fetchJsonOrEmpty(`${API_BASE}/afficherTousLesPaiements`);
+    const filtres = paiements.filter(p => p?.reservation?.utilisateur?.id == userId);
+
+    if (!filtres.length) {
+      zone.innerHTML = `<div class="empty-state">Aucun paiement trouvé.</div>`;
+      return;
+    }
+
+    zone.innerHTML = filtres.map(p => `
+      <div class="card compact-card">
+        <h3>${formatMoney(p.montant)}</h3>
+        <p><strong>Mode :</strong> ${escapeHtml(p.modePaiement)}</p>
+        <p><strong>Date :</strong> ${escapeHtml(p.datePaiement)}</p>
+        <p><strong>Réservation :</strong> #${escapeHtml(p.reservation?.id)}</p>
+        <span class="badge success">${escapeHtml(p.statutPaiement)}</span>
+      </div>
+    `).join('');
+  } catch (error) {
+    zone.innerHTML = `<div class="empty-state">${escapeHtml(toErrorMessage(error))}</div>`;
+  }
+}
+
+chargerPaiements();
+</script>
+</body>
+</html>

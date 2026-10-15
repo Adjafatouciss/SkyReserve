@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aéroports</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>SkyReserve</h2>
+      <p>Administration des billets</p>
+    </div>
+    <nav class="nav-links">
+      <a href="dashboard.html" class="">Dashboard</a>
+<a href="admins.html" class="">Admins</a>
+<a href="users.html" class="">Utilisateurs</a>
+<a href="compagnies.html" class="">Compagnies</a>
+<a href="avions.html" class="">Avions</a>
+<a href="aeroports.html" class="active">Aéroports</a>
+<a href="vols.html" class="">Vols</a>
+<a href="reservations.html" class="">Réservations</a>
+<a href="billets.html" class="">Billets</a>
+<a href="paiements.html" class="">Paiements</a>
+<a href="#" onclick="logout()">Déconnexion</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div>
+        <h1>Aéroports</h1>
+        <p>Créer et gérer les aéroports.</p>
+      </div>
+      <button class="btn btn-secondary" onclick="logout()">Se déconnecter</button>
+    </div>
+
+    
+<section class="panel">
+  <div class="panel-header"><h2>Formulaire</h2></div>
+  <input type="hidden" id="aeroportId">
+  <div class="form-grid">
+    <div class="form-group"><label>Nom aéroport</label><input id="nomAeroport"></div>
+    <div class="form-group"><label>Ville</label><input id="ville"></div>
+    <div class="form-group"><label>Pays</label><input id="pays"></div>
+    <div class="form-group"><label>Code aéroport</label><input id="codeAeroport"></div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="saveAeroport()">Enregistrer</button>
+    <button class="btn btn-secondary" onclick="resetAeroportForm()">Réinitialiser</button>
+  </div>
+  <p id="aeroportMessage" class="message"></p>
+</section>
+<section class="panel">
+  <div class="panel-header"><h2>Liste des aéroports</h2><button class="btn btn-secondary" onclick="loadAeroports()">Actualiser</button></div>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>ID</th><th>Nom</th><th>Ville</th><th>Pays</th><th>Code</th><th>Actions</th></tr></thead>
+      <tbody id="aeroportsTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+  </main>
+</div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/aeroports.js"></script>
+</body>
+</html>

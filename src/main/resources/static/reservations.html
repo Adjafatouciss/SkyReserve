@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réservations</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>SkyReserve</h2>
+      <p>Administration des billets</p>
+    </div>
+    <nav class="nav-links">
+      <a href="dashboard.html" class="">Dashboard</a>
+<a href="admins.html" class="">Admins</a>
+<a href="users.html" class="">Utilisateurs</a>
+<a href="compagnies.html" class="">Compagnies</a>
+<a href="avions.html" class="">Avions</a>
+<a href="aeroports.html" class="">Aéroports</a>
+<a href="vols.html" class="">Vols</a>
+<a href="reservations.html" class="active">Réservations</a>
+<a href="billets.html" class="">Billets</a>
+<a href="paiements.html" class="">Paiements</a>
+<a href="#" onclick="logout()">Déconnexion</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div>
+        <h1>Réservations</h1>
+        <p>Gérer les réservations liées aux utilisateurs et aux vols.</p>
+      </div>
+      <button class="btn btn-secondary" onclick="logout()">Se déconnecter</button>
+    </div>
+
+    
+<section class="panel">
+  <div class="panel-header"><h2>Formulaire</h2></div>
+  <input type="hidden" id="reservationId">
+  <div class="form-grid">
+    <div class="form-group"><label>Date réservation</label><input id="dateReservation" placeholder="2026-04-17"></div>
+    <div class="form-group"><label>Statut</label><input id="statutReservation" placeholder="En attente"></div>
+    <div class="form-group"><label>ID Utilisateur</label><input id="utilisateurId" type="number"></div>
+    <div class="form-group"><label>ID Vol</label><input id="volId" type="number"></div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="saveReservation()">Enregistrer</button>
+    <button class="btn btn-secondary" onclick="resetReservationForm()">Réinitialiser</button>
+  </div>
+  <p id="reservationMessage" class="message"></p>
+</section>
+<section class="panel">
+  <div class="panel-header"><h2>Liste des réservations</h2><button class="btn btn-secondary" onclick="loadReservations()">Actualiser</button></div>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>ID</th><th>Date</th><th>Statut</th><th>Utilisateur</th><th>Vol</th><th>Actions</th></tr></thead>
+      <tbody id="reservationsTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+  </main>
+</div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/reservations.js"></script>
+</body>
+</html>

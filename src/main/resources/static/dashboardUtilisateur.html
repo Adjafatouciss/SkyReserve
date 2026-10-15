@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Utilisateur - SkyReserve</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="layout">
+    <div id="sidebarContainer"></div>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div>
+                <h1 id="welcomeTitle">Bienvenue</h1>
+                <p id="welcomeSubtitle"></p>
+            </div>
+            <div class="actions">
+                <a href="mesReservation.html" class="btn btn-secondary">Mes réservations</a>
+                <a href="mesBillets.html" class="btn btn-primary">Mes billets</a>
+            </div>
+        </div>
+
+        <section class="grid-3 stats-grid-5">
+            <div class="card stat-card">
+                <div class="stat-number" id="countVolsDisponibles">0</div>
+                <div class="stat-label">Vols disponibles</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-number" id="countUserReservations">0</div>
+                <div class="stat-label">Réservations totales</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-number" id="countReservationsActives">0</div>
+                <div class="stat-label">Réservations actives</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-number" id="countBillets">0</div>
+                <div class="stat-label">Billets générés</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-number" id="countPaiements">0.00 $</div>
+                <div class="stat-label">Montant payé</div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Rechercher un vol</h2>
+            </div>
+            <div class="form-grid-4">
+                <div class="form-group">
+                    <label for="depart">Ville de départ</label>
+                    <input type="text" id="depart" placeholder="Ex: Montréal">
+                </div>
+                <div class="form-group">
+                    <label for="arrivee">Ville d'arrivée</label>
+                    <input type="text" id="arrivee" placeholder="Ex: Paris">
+                </div>
+                <div class="form-group">
+                    <label for="dateRecherche">Date du vol</label>
+                    <input type="text" id="dateRecherche" placeholder="Ex: 2026-05-10">
+                </div>
+                <div class="form-group">
+                    <label for="numeroVolRecherche">Numéro du vol</label>
+                    <input type="text" id="numeroVolRecherche" placeholder="Ex: SK1001">
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn btn-primary" onclick="chercherVols()">Rechercher</button>
+                <button class="btn btn-secondary" onclick="reinitialiserRecherche()">Réinitialiser</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Vols disponibles</h2>
+                <span class="muted">Cliquez sur réserver pour continuer vers le paiement.</span>
+            </div>
+            <div id="resultatsVols" class="grid-3"></div>
+        </section>
+
+        <section class="grid-2">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Dernières réservations</h2>
+                    <a href="mesReservation.html" class="btn btn-secondary">Voir tout</a>
+                </div>
+                <div id="recentReservations" class="grid-1"></div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Derniers paiements</h2>
+                    <a href="mesPaiements.html" class="btn btn-secondary">Voir tout</a>
+                </div>
+                <div id="recentPaiements" class="grid-1"></div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/dashboardUtilisateur.js"></script>
+</body>
+</html>

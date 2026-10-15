@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription Utilisateur - SkyReserve</title>
+
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #0f172a;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: white;
+    }
+
+    .register-container {
+        background: #1e293b;
+        padding: 40px;
+        border-radius: 12px;
+        width: 420px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        text-align: center;
+    }
+
+    h2 {
+        margin-bottom: 10px;
+        color: #38bdf8;
+    }
+
+    p {
+        font-size: 14px;
+        color: #cbd5e1;
+        margin-bottom: 25px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        background: #334155;
+        color: white;
+        font-size: 15px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #38bdf8;
+        border: none;
+        border-radius: 8px;
+        color: #0f172a;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        background: #0ea5e9;
+    }
+
+    #registerMessage {
+        margin-top: 10px;
+        font-size: 14px;
+        height: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="register-container">
+  <h2>Créer un compte</h2>
+  <p>Rejoignez SkyReserve et réservez vos vols facilement</p>
+
+  <input type="text" id="nom" placeholder="Nom">
+  <input type="text" id="prenom" placeholder="Prénom">
+  <input type="email" id="email" placeholder="Email">
+  <input type="text" id="telephone" placeholder="Téléphone">
+  <input type="password" id="motDePasse" placeholder="Mot de passe">
+
+  <button onclick="inscrireUtilisateur()">S'inscrire</button>
+
+  <div id="registerMessage"></div>
+</div>
+
+<script src="assets/js/config.js"></script>
+
+<script>
+  async function inscrireUtilisateur() {
+      const nom = document.getElementById("nom").value.trim();
+      const prenom = document.getElementById("prenom").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const telephone = document.getElementById("telephone").value.trim();
+      const motDePasse = document.getElementById("motDePasse").value.trim();
+
+      const msg = document.getElementById("registerMessage");
+
+      if (!nom || !prenom || !email || !telephone || !motDePasse) {
+          msg.style.color = "red";
+          msg.textContent = "Veuillez remplir tous les champs.";
+          return;
+      }
+
+      try {
+          const response = await fetch(`${API_BASE}/ajouterUtilisateur`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                  nom,
+                  prenom,
+                  email,
+                  telephone,
+                  motDePasse
+              })
+          });
+
+          if (!response.ok) {
+              msg.style.color = "red";
+              msg.textContent = "Erreur lors de l'inscription.";
+              return;
+          }
+
+          msg.style.color = "#4ade80";
+          msg.textContent = "Inscription réussie !";
+
+          setTimeout(() => {
+              window.location.href = "loginUtilisateur.html";
+          }, 1500);
+
+      } catch (e) {
+          msg.style.color = "red";
+          msg.textContent = "Erreur de connexion au serveur.";
+      }
+  }
+</script>
+
+</body>
+</html>

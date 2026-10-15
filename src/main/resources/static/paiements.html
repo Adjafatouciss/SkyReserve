@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paiements</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>SkyReserve</h2>
+      <p>Administration des billets</p>
+    </div>
+    <nav class="nav-links">
+      <a href="dashboard.html" class="">Dashboard</a>
+<a href="admins.html" class="">Admins</a>
+<a href="users.html" class="">Utilisateurs</a>
+<a href="compagnies.html" class="">Compagnies</a>
+<a href="avions.html" class="">Avions</a>
+<a href="aeroports.html" class="">Aéroports</a>
+<a href="vols.html" class="">Vols</a>
+<a href="reservations.html" class="">Réservations</a>
+<a href="billets.html" class="">Billets</a>
+<a href="paiements.html" class="active">Paiements</a>
+<a href="#" onclick="logout()">Déconnexion</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div>
+        <h1>Paiements</h1>
+        <p>Suivi et gestion des paiements.</p>
+      </div>
+      <button class="btn btn-secondary" onclick="logout()">Se déconnecter</button>
+    </div>
+
+    
+<section class="panel">
+  <div class="panel-header"><h2>Formulaire</h2></div>
+  <input type="hidden" id="paiementId">
+  <div class="form-grid">
+    <div class="form-group"><label>Montant</label><input id="montant" type="number" step="0.01"></div>
+    <div class="form-group"><label>Mode paiement</label><input id="modePaiement"></div>
+    <div class="form-group"><label>Date paiement</label><input id="datePaiement" placeholder="2026-04-17"></div>
+    <div class="form-group"><label>Statut paiement</label><input id="statutPaiement" placeholder="Payé"></div>
+    <div class="form-group"><label>ID Réservation</label><input id="reservationId" type="number"></div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="savePaiement()">Enregistrer</button>
+    <button class="btn btn-secondary" onclick="resetPaiementForm()">Réinitialiser</button>
+  </div>
+  <p id="paiementMessage" class="message"></p>
+</section>
+<section class="panel">
+  <div class="panel-header"><h2>Liste des paiements</h2><button class="btn btn-secondary" onclick="loadPaiements()">Actualiser</button></div>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>ID</th><th>Montant</th><th>Mode</th><th>Date</th><th>Statut</th><th>Réservation</th><th>Actions</th></tr></thead>
+      <tbody id="paiementsTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+  </main>
+</div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/paiements.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Réservations - SkyReserve</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="layout">
+    <div id="sidebarContainer"></div>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div>
+                <h1>Mes réservations</h1>
+                <p>Consultez chaque réservation, son paiement et l’état du billet.</p>
+            </div>
+            <div class="actions">
+                <a href="dashboardUtilisateur.html" class="btn btn-secondary">Retour dashboard</a>
+            </div>
+        </div>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Historique complet</h2>
+            </div>
+            <div id="reservationsList" class="grid-2"></div>
+        </section>
+    </main>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/mesReservations.js"></script>
+</body>
+</html>

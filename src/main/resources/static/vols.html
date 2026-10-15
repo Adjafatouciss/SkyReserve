@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vols</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>SkyReserve</h2>
+      <p>Administration des billets</p>
+    </div>
+    <nav class="nav-links">
+      <a href="dashboard.html" class="">Dashboard</a>
+<a href="admins.html" class="">Admins</a>
+<a href="users.html" class="">Utilisateurs</a>
+<a href="compagnies.html" class="">Compagnies</a>
+<a href="avions.html" class="">Avions</a>
+<a href="aeroports.html" class="">Aéroports</a>
+<a href="vols.html" class="active">Vols</a>
+<a href="reservations.html" class="">Réservations</a>
+<a href="billets.html" class="">Billets</a>
+<a href="paiements.html" class="">Paiements</a>
+<a href="#" onclick="logout()">Déconnexion</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div>
+        <h1>Vols</h1>
+        <p>Créer et gérer les vols disponibles.</p>
+      </div>
+      <button class="btn btn-secondary" onclick="logout()">Se déconnecter</button>
+    </div>
+
+    
+<section class="panel">
+  <div class="panel-header"><h2>Formulaire</h2></div>
+  <input type="hidden" id="volId">
+  <div class="form-grid-3">
+    <div class="form-group"><label>Numéro vol</label><input id="numeroVol"></div>
+    <div class="form-group"><label>Date départ</label><input id="dateDepart" placeholder="2026-04-17"></div>
+    <div class="form-group"><label>Heure départ</label><input id="heureDepart" placeholder="08:30"></div>
+    <div class="form-group"><label>Date arrivée</label><input id="dateArrivee"></div>
+    <div class="form-group"><label>Heure arrivée</label><input id="heureArrivee"></div>
+    <div class="form-group"><label>Prix</label><input id="prix" type="number" step="0.01"></div>
+    <div class="form-group"><label>ID Compagnie</label><input id="compagnieId" type="number"></div>
+    <div class="form-group"><label>ID Avion</label><input id="avionId" type="number"></div>
+    <div class="form-group"><label>ID Aéroport départ</label><input id="aeroportDepartId" type="number"></div>
+    <div class="form-group"><label>ID Aéroport arrivée</label><input id="aeroportArriveeId" type="number"></div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="saveVol()">Enregistrer</button>
+    <button class="btn btn-secondary" onclick="resetVolForm()">Réinitialiser</button>
+  </div>
+  <p id="volMessage" class="message"></p>
+</section>
+<section class="panel">
+  <div class="panel-header"><h2>Liste des vols</h2><button class="btn btn-secondary" onclick="loadVols()">Actualiser</button></div>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>ID</th><th>Vol</th><th>Dates</th><th>Prix</th><th>Actions</th></tr></thead>
+      <tbody id="volsTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+  </main>
+</div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/vols.js"></script>
+</body>
+</html>

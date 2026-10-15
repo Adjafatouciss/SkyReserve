@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>SkyReserve</h2>
+      <p>Administration des billets</p>
+    </div>
+    <nav class="nav-links">
+      <a href="dashboard.html" class="active">Dashboard</a>
+<a href="admins.html" class="">Admins</a>
+<a href="users.html" class="">Utilisateurs</a>
+<a href="compagnies.html" class="">Compagnies</a>
+<a href="avions.html" class="">Avions</a>
+<a href="aeroports.html" class="">Aéroports</a>
+<a href="vols.html" class="">Vols</a>
+<a href="reservations.html" class="">Réservations</a>
+<a href="billets.html" class="">Billets</a>
+<a href="paiements.html" class="">Paiements</a>
+<a href="#" onclick="logout()">Déconnexion</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Vue d’ensemble du système de réservation.</p>
+      </div>
+      <button class="btn btn-secondary" onclick="logout()">Se déconnecter</button>
+    </div>
+
+    
+<section class="grid-3">
+  <div class="card"><h3>Admins</h3><div class="stat-number" id="countAdmins">0</div><div class="stat-label">Comptes administrateurs</div></div>
+  <div class="card"><h3>Utilisateurs</h3><div class="stat-number" id="countUsers">0</div><div class="stat-label">Clients enregistrés</div></div>
+  <div class="card"><h3>Compagnies</h3><div class="stat-number" id="countCompagnies">0</div><div class="stat-label">Compagnies aériennes</div></div>
+  <div class="card"><h3>Avions</h3><div class="stat-number" id="countAvions">0</div><div class="stat-label">Appareils disponibles</div></div>
+  <div class="card"><h3>Aéroports</h3><div class="stat-number" id="countAeroports">0</div><div class="stat-label">Aéroports enregistrés</div></div>
+  <div class="card"><h3>Vols</h3><div class="stat-number" id="countVols">0</div><div class="stat-label">Vols programmés</div></div>
+  <div class="card"><h3>Réservations</h3><div class="stat-number" id="countReservations">0</div><div class="stat-label">Réservations créées</div></div>
+  <div class="card"><h3>Billets</h3><div class="stat-number" id="countBillets">0</div><div class="stat-label">Billets générés</div></div>
+  <div class="card"><h3>Paiements</h3><div class="stat-number" id="countPaiements">0</div><div class="stat-label">Paiements suivis</div></div>
+</section>
+<section class="panel">
+  <div class="panel-header"><h2>Conseil de saisie</h2></div>
+  <div class="help-box">
+    Commence par créer les <strong>compagnies</strong>, puis les <strong>avions</strong> et les <strong>aéroports</strong>.
+    Ensuite crée les <strong>vols</strong>, puis les <strong>utilisateurs</strong>, les <strong>réservations</strong>, les <strong>billets</strong> et enfin les <strong>paiements</strong>.
+    <br><br>
+    Pour les relations, les formulaires utilisent la logique d'IDs du backend : par exemple pour un vol, il faut fournir l'ID de la compagnie, de l'avion, de l'aéroport de départ et de l'aéroport d'arrivée.
+  </div>
+</section>
+
+  </main>
+</div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/dashboard.js"></script>
+</body>
+</html>

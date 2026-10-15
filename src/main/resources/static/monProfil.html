@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - SkyReserve</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="layout">
+    <div id="sidebarContainer"></div>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div>
+                <h1>Mon profil</h1>
+                <p>Consultez et modifiez les informations de votre compte utilisateur.</p>
+            </div>
+            <a href="dashboardUtilisateur.html" class="btn btn-secondary">Retour dashboard</a>
+        </div>
+
+        <section class="grid-2">
+            <div class="panel profile-summary-panel">
+                <div class="profile-avatar">U</div>
+                <h2 id="profilNomComplet">Utilisateur</h2>
+                <p id="profilEmail" class="muted"></p>
+                <p class="help-box">Cet espace vous permet de garder vos informations à jour pour toutes vos réservations et tous vos paiements.</p>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Modifier mes informations</h2>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone">Téléphone</label>
+                        <input type="text" id="telephone">
+                    </div>
+                    <div class="form-group full-span">
+                        <label for="motDePasse">Nouveau mot de passe</label>
+                        <input type="password" id="motDePasse" placeholder="Laissez vide pour garder l'ancien mot de passe">
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="modifierProfil()">Enregistrer les modifications</button>
+                </div>
+                <div id="profilMessage" class="message"></div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/monProfil.js"></script>
+</body>
+</html>

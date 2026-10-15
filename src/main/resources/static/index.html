@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil</title>
+    <style>
+        body {
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial;
+        }
+
+        .box {
+            text-align: center;
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 15px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .user {
+            background: #22c55e;
+        }
+
+        .admin {
+            background: #8b5cf6;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>Bienvenue 👋</h1>
+    <p>Choisissez votre espace :</p>
+
+    <button class="user" onclick="goUser()">Utilisateur</button>
+    <button class="admin" onclick="goAdmin()">Admin</button>
+</div>
+
+<script>
+    function goUser() {
+        window.location.href = "LoginUtilisateur.html"; // page utilisateur
+    }
+
+    function goAdmin() {
+        window.location.href = "login.html"; // ta page connexion admin
+    }
+</script>
+
+</body>
+</html>

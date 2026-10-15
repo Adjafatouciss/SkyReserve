@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Billets - SkyReserve</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+<div class="layout">
+    <div id="sidebarContainer"></div>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div>
+                <h1>Mes billets</h1>
+                <p>Tous les billets générés après paiement apparaissent ici.</p>
+            </div>
+            <a href="dashboardUtilisateur.html" class="btn btn-secondary">Retour dashboard</a>
+        </div>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Billets disponibles</h2>
+            </div>
+            <div id="billetsList" class="grid-2"></div>
+        </section>
+    </main>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/mesBillets.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement - SkyReserve</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="auth-page">
+<div class="auth-card payment-card">
+    <h1>Paiement sécurisé</h1>
+    <p>Finalisez votre réservation. Une fois le paiement validé, votre billet sera généré automatiquement.</p>
+
+    <div class="form-group">
+        <label for="montantAffiche">Montant à payer</label>
+        <input type="text" id="montantAffiche" disabled>
+    </div>
+
+    <div class="form-group">
+        <label for="nomCarte">Nom sur la carte</label>
+        <input type="text" id="nomCarte" placeholder="Nom complet du porteur">
+    </div>
+
+    <div class="form-group">
+        <label for="numeroCarte">Numéro de carte</label>
+        <input type="text" id="numeroCarte" placeholder="1234 5678 9012 3456">
+    </div>
+
+    <div class="form-grid">
+        <div class="form-group">
+            <label for="expiration">Expiration</label>
+            <input type="text" id="expiration" placeholder="MM/AA">
+        </div>
+        <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" placeholder="123">
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn btn-primary full" onclick="payer()">Valider le paiement</button>
+        <a href="mesReservation.html" class="btn btn-secondary full center-link">Retour aux réservations</a>
+    </div>
+
+    <div id="paiementMessage" class="message"></div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/paiement.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billets</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>SkyReserve</h2>
+      <p>Administration des billets</p>
+    </div>
+    <nav class="nav-links">
+      <a href="dashboard.html" class="">Dashboard</a>
+<a href="admins.html" class="">Admins</a>
+<a href="users.html" class="">Utilisateurs</a>
+<a href="compagnies.html" class="">Compagnies</a>
+<a href="avions.html" class="">Avions</a>
+<a href="aeroports.html" class="">Aéroports</a>
+<a href="vols.html" class="">Vols</a>
+<a href="reservations.html" class="">Réservations</a>
+<a href="billets.html" class="active">Billets</a>
+<a href="paiements.html" class="">Paiements</a>
+<a href="#" onclick="logout()">Déconnexion</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div>
+        <h1>Billets</h1>
+        <p>Créer et gérer les billets de réservation.</p>
+      </div>
+      <button class="btn btn-secondary" onclick="logout()">Se déconnecter</button>
+    </div>
+
+    
+<section class="panel">
+  <div class="panel-header"><h2>Formulaire</h2></div>
+  <input type="hidden" id="billetId">
+  <div class="form-grid-3">
+    <div class="form-group"><label>Numéro billet</label><input id="numeroBillet"></div>
+    <div class="form-group"><label>Prix billet</label><input id="prixBillet" type="number" step="0.01"></div>
+    <div class="form-group"><label>Siège</label><input id="siege"></div>
+    <div class="form-group"><label>Classe voyage</label><input id="classeVoyage"></div>
+    <div class="form-group"><label>ID Réservation</label><input id="reservationId" type="number"></div>
+    <div class="form-group"><label>ID Vol</label><input id="volId" type="number"></div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="saveBillet()">Enregistrer</button>
+    <button class="btn btn-secondary" onclick="resetBilletForm()">Réinitialiser</button>
+  </div>
+  <p id="billetMessage" class="message"></p>
+</section>
+<section class="panel">
+  <div class="panel-header"><h2>Liste des billets</h2><button class="btn btn-secondary" onclick="loadBillets()">Actualiser</button></div>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>ID</th><th>Numéro</th><th>Prix</th><th>Classe</th><th>Siège</th><th>Vol</th><th>Actions</th></tr></thead>
+      <tbody id="billetsTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+  </main>
+</div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/billets.js"></script>
+</body>
+</html>
