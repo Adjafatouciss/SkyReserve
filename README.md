@@ -32,7 +32,7 @@ Un voyageur peut rechercher un vol, réserver, payer et retrouver ses billets da
 | Couche | Technologies |
 |---|---|
 | Back-end | Java 17, Spring Boot, Spring Data JPA (Hibernate), Bean Validation, Lombok |
-| Base de données | MySQL |
+| Base de données | MySQL (local), PostgreSQL (en ligne) |
 | Front-end | HTML, CSS, JavaScript (Fetch API) |
 | Outils | Maven, Git / GitHub, Postman |
 
@@ -120,13 +120,13 @@ Ordre conseillé pour créer les données de test : compagnies → avions → a�
 
 ## Déploiement en ligne
 
-Le projet contient un `Dockerfile` pour être déployé sur [Render](https://render.com) avec une base MySQL hébergée sur [Aiven](https://aiven.io).
+Le projet contient un `Dockerfile` pour être déployé sur [Render](https://render.com) avec une base PostgreSQL gratuite hébergée sur [Aiven](https://aiven.io). Grâce à JPA/Hibernate, le même code fonctionne avec MySQL en local et PostgreSQL en ligne.
 
 Variables d'environnement à définir sur Render :
 
 | Variable | Exemple |
 |---|---|
-| `DB_URL` | `jdbc:mysql://<hôte>:<port>/defaultdb?sslMode=REQUIRED` |
+| `DB_URL` | `jdbc:postgresql://<hôte>:<port>/defaultdb?sslmode=require` |
 | `DB_USERNAME` | `avnadmin` |
 | `DB_PASSWORD` | le mot de passe fourni par Aiven |
 | `DEMO_DATA` | `true` |
