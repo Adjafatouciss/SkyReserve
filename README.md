@@ -4,6 +4,10 @@ Application web full-stack de **réservation de billets d'avion**, développée 
 
 Un voyageur peut rechercher un vol, réserver, payer et retrouver ses billets dans son espace personnel. Un administrateur gère l'ensemble des données : vols, avions, aéroports, compagnies aériennes, utilisateurs, réservations, billets et paiements.
 
+**[Tester la démo en ligne](https://skyreserve-kb9y.onrender.com/Reservation_Billets/LoginUtilisateur.html)** · compte voyageur : `demo@skyreserve.ca` / `demo1234` · [espace administrateur](https://skyreserve-kb9y.onrender.com/Reservation_Billets/login.html) : `admin@skyreserve.ca` / `demo1234`
+
+> Hébergement gratuit : le premier chargement peut prendre environ une minute.
+
 ![Tableau de bord utilisateur de SkyReserve](docs/screenshots/dashboard-utilisateur.png)
 
 ---
@@ -146,5 +150,5 @@ Variables d'environnement à définir sur Render :
 
 **Adja Fatou CISS** — étudiante en Techniques de l'informatique (programmation), Collège LaSalle, Montréal
 
-- Portfolio : _à ajouter_
+- Portfolio : [adjafatouciss.github.io](https://adjafatouciss.github.io)
 - GitHub : [@Adjafatouciss](https://github.com/Adjafatouciss)
