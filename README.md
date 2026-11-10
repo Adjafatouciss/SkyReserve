@@ -35,7 +35,7 @@ Un voyageur peut rechercher un vol, réserver, payer et retrouver ses billets da
 
 | Couche | Technologies |
 |---|---|
-| Back-end | Java 17, Spring Boot, Spring Data JPA (Hibernate), Bean Validation, Lombok |
+| Back-end | Java 17, Spring Boot, Spring Security, Spring Data JPA (Hibernate), Bean Validation, Lombok |
 | Base de données | MySQL (local), PostgreSQL (en ligne) |
 | Front-end | HTML, CSS, JavaScript (Fetch API) |
 | Outils | Maven, Git / GitHub, Postman |
@@ -56,6 +56,23 @@ src/main/resources/static/   → pages HTML, CSS et JavaScript du front-end
 ```
 
 Le front-end communique avec l'API REST exposée sous `/api/reservationBillets`.
+
+---
+
+## Sécurité (Spring Security)
+
+- **Mots de passe chiffrés avec BCrypt** ; les anciens mots de passe en clair sont convertis automatiquement au démarrage.
+- **Connexion vérifiée par le serveur** : une session est ouverte après `/loginUtilisateur` ou `/loginAdmin`.
+- **Accès par rôle** :
+
+| Accès | Routes |
+|---|---|
+| Public | connexion, inscription, liste et détail des vols |
+| Utilisateur connecté | ses réservations, billets, paiements et son profil uniquement |
+| Administrateur | gestion des vols, avions, aéroports, compagnies, utilisateurs, admins, et toutes les données |
+
+- **Protection CSRF** : jeton dans le cookie `XSRF-TOKEN`, renvoyé par `config.js` dans l'en-tête `X-XSRF-TOKEN`.
+- Les mots de passe ne sont jamais renvoyés par l'API.
 
 ---
 
@@ -140,8 +157,6 @@ Variables d'environnement à définir sur Render :
 
 ## Améliorations prévues
 
-- Chiffrement des mots de passe avec BCrypt (les mots de passe ne sont déjà plus renvoyés par l'API)
-- Authentification côté serveur avec Spring Security
 - Tests unitaires et d'intégration
 
 ---

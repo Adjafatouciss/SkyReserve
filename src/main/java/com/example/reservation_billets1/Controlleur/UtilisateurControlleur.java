@@ -2,7 +2,10 @@ package com.example.reservation_billets1.Controlleur;
 
 import com.example.reservation_billets1.Modele.Utilisateur;
 import com.example.reservation_billets1.Repository.UtilisateurRepository;
+import com.example.reservation_billets1.Securite.SessionUtilisateur;
 import com.example.reservation_billets1.Services.UtilisateurServices;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,10 @@ public class UtilisateurControlleur {
     // Instantier la classe service pour pouvoir l'utiliser
     @Autowired
     private UtilisateurServices U_Services;
+
+    // Session de la personne connectée (Spring Security)
+    @Autowired
+    private SessionUtilisateur session;
 
     // La methode controllerur avant ajouter
     @PostMapping("/ajouterUtilisateur")
@@ -54,6 +61,12 @@ public class UtilisateurControlleur {
     public ResponseEntity<?> modifierUtilisateur(@PathVariable Long id,
                                                  @Valid @RequestBody Utilisateur U,
                                                  BindingResult result){
+
+        // Un utilisateur ne peut modifier que son propre profil
+        if (!session.peutAcceder(id)) {
+            return ResponseEntity.status(403).body("Accès refusé");
+        }
+
 
         // Vérification des champs
         // En modification, laisser le mot de passe vide = garder l'ancien
@@ -92,6 +105,11 @@ public class UtilisateurControlleur {
     @GetMapping("/utilisateur/{id}")
     public ResponseEntity<?> getUtilisateurParId(@PathVariable Long id){
 
+        // Un utilisateur ne peut consulter que son propre profil
+        if (!session.peutAcceder(id)) {
+            return ResponseEntity.status(403).body("Accès refusé");
+        }
+
         Utilisateur user = U_Services.RechercherUtilisateur(id);
 
         if(user == null){
@@ -102,7 +120,9 @@ public class UtilisateurControlleur {
     }
 
     @PostMapping("/loginUtilisateur")
-    public ResponseEntity<?> loginUtilisateur(@RequestBody Utilisateur u) {
+    public ResponseEntity<?> loginUtilisateur(@RequestBody Utilisateur u,
+                                              HttpServletRequest request,
+                                              HttpServletResponse response) {
 
         Utilisateur user = U_Services.login(u.getEmail(), u.getMotDePasse());
 
@@ -110,6 +130,8 @@ public class UtilisateurControlleur {
             return ResponseEntity.status(401).body("Email ou mot de passe incorrect");
         }
 
+        // Connexion réussie : le serveur garde l'utilisateur dans sa session
+        session.connecter(user.getId(), user.getEmail(), "UTILISATEUR", request, response);
         return ResponseEntity.ok(user);
     }
 

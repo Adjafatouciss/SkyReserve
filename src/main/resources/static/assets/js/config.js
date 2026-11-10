@@ -1,5 +1,57 @@
 
 const API_BASE = "/Reservation_Billets/api/reservationBillets";
+
+/* ==========================================================
+   SÉCURITÉ (Spring Security)
+   Toutes les requêtes fetch() du site passent par ici :
+   - on envoie le jeton CSRF (lu dans le cookie XSRF-TOKEN) pour POST/PUT/DELETE ;
+   - si le serveur répond 401 (session expirée ou pas connecté),
+     on renvoie vers la bonne page de connexion.
+   ========================================================== */
+const PAGES_UTILISATEUR = ["dashboardUtilisateur.html", "mesReservation.html", "mesBillets.html",
+                           "mesPaiements.html", "monProfil.html", "paiement.html"];
+const PAGES_PUBLIQUES = ["LoginUtilisateur.html", "login.html", "inscriptionUtilisateur.html", "index.html", ""];
+
+function pageActuelle() {
+  return window.location.pathname.split("/").pop();
+}
+
+function lireCookie(nom) {
+  const trouve = document.cookie.match(new RegExp("(?:^|; )" + nom + "=([^;]*)"));
+  return trouve ? decodeURIComponent(trouve[1]) : null;
+}
+
+(function proteger() {
+  const fetchOriginal = window.fetch.bind(window);
+
+  window.fetch = async (url, options = {}) => {
+    const methode = (options.method || "GET").toUpperCase();
+    const entetes = new Headers(options.headers || {});
+    if (!["GET", "HEAD", "OPTIONS"].includes(methode)) {
+      const jeton = lireCookie("XSRF-TOKEN");
+      if (jeton) entetes.set("X-XSRF-TOKEN", jeton);
+    }
+
+    const reponse = await fetchOriginal(url, { credentials: "same-origin", ...options, headers: entetes });
+
+    const page = pageActuelle();
+    if (reponse.status === 401 && !PAGES_PUBLIQUES.includes(page)) {
+      const pageUtilisateur = PAGES_UTILISATEUR.includes(page);
+      if (pageUtilisateur) { clearUserSession(); } else { clearAdminSession(); }
+      window.location.href = pageUtilisateur ? "LoginUtilisateur.html" : "login.html";
+    }
+    return reponse;
+  };
+})();
+
+/** Ferme la session côté serveur. */
+async function deconnecterServeur() {
+  try {
+    await fetch(`${API_BASE}/logout`, { method: "POST" });
+  } catch {
+    // même hors ligne, on nettoie le navigateur
+  }
+}
 function setAdminSession(admin) {
   if (!admin) return;
   admin.role = admin.role || "ADMIN";
@@ -32,7 +84,8 @@ function requireAuth() {
   return requireAdminAuth();
 }
 
-function logoutAdmin() {
+async function logoutAdmin() {
+  await deconnecterServeur();
   clearAdminSession();
   window.location.href = "login.html";
 }
@@ -81,7 +134,12 @@ function requireUserAuth() {
   return true;
 }
 
-function logout() {
+async function logout() {
+  // Les pages admin utilisent aussi logout() : on renvoie vers la bonne connexion
+  if (!PAGES_UTILISATEUR.includes(pageActuelle())) {
+    return logoutAdmin();
+  }
+  await deconnecterServeur();
   clearUserSession();
   window.location.href = "LoginUtilisateur.html";
 }

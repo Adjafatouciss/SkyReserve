@@ -2,6 +2,7 @@ package com.example.reservation_billets1.Services;
 import com.example.reservation_billets1.Modele.Utilisateur;
 import com.example.reservation_billets1.Repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +14,15 @@ public class UtilisateurServices {
     @Autowired
     private UtilisateurRepository U_Repository;
 
+    // Chiffrement des mots de passe (BCrypt)
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     // Methode pour ajouter un utilisateur
     public Utilisateur AjouterUtilisateur(Utilisateur U){
          U.setRole(Utilisateur.ROLE_UTILISATEUR);
+         // On n'enregistre jamais le mot de passe en clair
+         U.setMotDePasse(passwordEncoder.encode(U.getMotDePasse()));
          return U_Repository.save(U);
     }
 
@@ -47,7 +54,7 @@ public class UtilisateurServices {
         User.setEmail(U.getEmail());
         // Nouveau mot de passe seulement s'il a été saisi
         if (U.getMotDePasse() != null && !U.getMotDePasse().isBlank()) {
-            User.setMotDePasse(U.getMotDePasse());
+            User.setMotDePasse(passwordEncoder.encode(U.getMotDePasse()));
         }
         User.setTelephone(U.getTelephone());
         User.setRole(Utilisateur.ROLE_UTILISATEUR);
@@ -68,9 +75,10 @@ public class UtilisateurServices {
         return U_Repository.findById(id).orElse(null);
     }
     public Utilisateur login(String email, String motDePasse) {
-        Utilisateur user = U_Repository.findByEmailAndMotDePasse(email, motDePasse);
+        Utilisateur user = U_Repository.findByEmail(email);
 
-        if (user == null) {
+        // Comparaison du mot de passe saisi avec le mot de passe chiffré
+        if (user == null || motDePasse == null || !passwordEncoder.matches(motDePasse, user.getMotDePasse())) {
             return null;
         }
 

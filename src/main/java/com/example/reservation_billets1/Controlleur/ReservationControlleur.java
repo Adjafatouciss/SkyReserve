@@ -1,6 +1,7 @@
 package com.example.reservation_billets1.Controlleur;
 
 import com.example.reservation_billets1.Modele.Reservation;
+import com.example.reservation_billets1.Securite.SessionUtilisateur;
 import com.example.reservation_billets1.Services.ReservationServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,23 @@ public class ReservationControlleur {
     @Autowired
     private ReservationServices reservationServices;
 
+    // Session de la personne connectée (Spring Security)
+    @Autowired
+    private SessionUtilisateur session;
+
+    /** Id de l'utilisateur à qui appartient la réservation (null si aucun). */
+    private Long proprietaire(Reservation r) {
+        return (r == null || r.getUtilisateur() == null) ? null : r.getUtilisateur().getId();
+    }
+
     @PostMapping("/ajouterReservation")
     public ResponseEntity<?> ajouterReservation(@Valid @RequestBody Reservation reservation, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
+        }
+        // Un utilisateur ne peut réserver qu'à son propre nom
+        if (!session.peutAcceder(proprietaire(reservation))) {
+            return ResponseEntity.status(403).body("Accès refusé");
         }
         try {
             return ResponseEntity.status(201).body(reservationServices.ajouterReservation(reservation));
@@ -45,6 +59,12 @@ public class ReservationControlleur {
                                                  BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
+        }
+        // Un utilisateur ne peut modifier (annuler) que ses propres réservations
+        Reservation existante = reservationServices.rechercherReservation(id);
+        if (existante != null && (!session.peutAcceder(proprietaire(existante))
+                || !session.peutAcceder(proprietaire(reservation)))) {
+            return ResponseEntity.status(403).body("Accès refusé");
         }
         try {
             Reservation updated = reservationServices.modifierReservation(id, reservation);
@@ -72,11 +92,17 @@ public class ReservationControlleur {
         if (reservation == null) {
             return ResponseEntity.status(404).body("Réservation non trouvée");
         }
+        if (!session.peutAcceder(proprietaire(reservation))) {
+            return ResponseEntity.status(403).body("Accès refusé");
+        }
         return ResponseEntity.ok(reservation);
     }
 
     @GetMapping("/reservations/utilisateur/{id}")
     public ResponseEntity<?> getReservationsByUtilisateur(@PathVariable Long id) {
+        if (!session.peutAcceder(id)) {
+            return ResponseEntity.status(403).body("Accès refusé");
+        }
         List<Reservation> reservations = reservationServices.listeReservationsParUtilisateur(id);
         return ResponseEntity.ok(reservations); // renvoie une liste vide si aucune réservation
     }

@@ -4,6 +4,8 @@ import com.example.reservation_billets1.Modele.*;
 import com.example.reservation_billets1.Repository.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -17,6 +19,7 @@ import java.time.LocalDate;
  * et seulement si la base ne contient encore aucun vol.
  */
 @Component
+@Order(2) // après MigrationMotsDePasse
 public class DonneesDemo implements CommandLineRunner {
 
     public static final String EMAIL_VOYAGEUR = "demo@skyreserve.ca";
@@ -30,6 +33,7 @@ public class DonneesDemo implements CommandLineRunner {
     private final VolRepository vols;
     private final UtilisateurRepository utilisateurs;
     private final AdminRepository admins;
+    private final PasswordEncoder passwordEncoder;
 
     public DonneesDemo(@Value("${app.demo-data:false}") boolean active,
                        CompagnieAerienneRepository compagnies,
@@ -37,7 +41,8 @@ public class DonneesDemo implements CommandLineRunner {
                        AeroportRepository aeroports,
                        VolRepository vols,
                        UtilisateurRepository utilisateurs,
-                       AdminRepository admins) {
+                       AdminRepository admins,
+                       PasswordEncoder passwordEncoder) {
         this.active = active;
         this.compagnies = compagnies;
         this.avions = avions;
@@ -45,6 +50,7 @@ public class DonneesDemo implements CommandLineRunner {
         this.vols = vols;
         this.utilisateurs = utilisateurs;
         this.admins = admins;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -95,7 +101,7 @@ public class DonneesDemo implements CommandLineRunner {
             u.setNom("Demo");
             u.setPrenom("Visiteur");
             u.setEmail(EMAIL_VOYAGEUR);
-            u.setMotDePasse(MOT_DE_PASSE_DEMO);
+            u.setMotDePasse(passwordEncoder.encode(MOT_DE_PASSE_DEMO));
             u.setTelephone("514-555-0100");
             utilisateurs.save(u);
         }
@@ -105,7 +111,7 @@ public class DonneesDemo implements CommandLineRunner {
             a.setNom("Demo");
             a.setPrenom("Admin");
             a.setEmail(EMAIL_ADMIN);
-            a.setMotDePasse(MOT_DE_PASSE_DEMO);
+            a.setMotDePasse(passwordEncoder.encode(MOT_DE_PASSE_DEMO));
             admins.save(a);
         }
     }

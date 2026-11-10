@@ -3,6 +3,7 @@ package com.example.reservation_billets1.Services;
 import com.example.reservation_billets1.Modele.Admin;
 import com.example.reservation_billets1.Repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +14,15 @@ public class AdminServices {
     @Autowired
     private AdminRepository adminRepository;
 
+    // Chiffrement des mots de passe (BCrypt)
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     // Ajouter un admin
     public Admin ajouterAdmin(Admin admin) {
         admin.setRole(Admin.ROLE_ADMIN);
+        // On n'enregistre jamais le mot de passe en clair
+        admin.setMotDePasse(passwordEncoder.encode(admin.getMotDePasse()));
         return adminRepository.save(admin);
     }
 
@@ -43,7 +50,7 @@ public class AdminServices {
         adminExistant.setEmail(admin.getEmail());
         // Nouveau mot de passe seulement s'il a été saisi
         if (admin.getMotDePasse() != null && !admin.getMotDePasse().isBlank()) {
-            adminExistant.setMotDePasse(admin.getMotDePasse());
+            adminExistant.setMotDePasse(passwordEncoder.encode(admin.getMotDePasse()));
         }
         adminExistant.setRole(Admin.ROLE_ADMIN);
 
@@ -66,7 +73,8 @@ public class AdminServices {
 
         Admin admin = adminRepository.findByEmail(email);
 
-        if (admin == null || !admin.getMotDePasse().equals(motDePasse)) {
+        // Comparaison du mot de passe saisi avec le mot de passe chiffré
+        if (admin == null || motDePasse == null || !passwordEncoder.matches(motDePasse, admin.getMotDePasse())) {
             return null;
         }
 

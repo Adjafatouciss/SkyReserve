@@ -1,7 +1,10 @@
 package com.example.reservation_billets1.Controlleur;
 
 import com.example.reservation_billets1.Modele.Admin;
+import com.example.reservation_billets1.Securite.SessionUtilisateur;
 import com.example.reservation_billets1.Services.AdminServices;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,10 @@ public class AdminControlleur {
 
     @Autowired
     private AdminServices A_Services;
+
+    // Session de la personne connectée (Spring Security)
+    @Autowired
+    private SessionUtilisateur session;
 
     @PostMapping("/ajouterAdmin")
     public ResponseEntity<?> ajouterAdmin(@Valid @RequestBody Admin A, BindingResult result) {
@@ -80,7 +87,9 @@ public class AdminControlleur {
         return ResponseEntity.ok(admin);
     }
     @PostMapping("/loginAdmin")
-    public ResponseEntity<?> loginAdmin(@RequestBody Admin A) {
+    public ResponseEntity<?> loginAdmin(@RequestBody Admin A,
+                                        HttpServletRequest request,
+                                        HttpServletResponse response) {
 
         Admin admin = A_Services.login(A.getEmail(), A.getMotDePasse());
 
@@ -88,6 +97,8 @@ public class AdminControlleur {
             return ResponseEntity.status(401).body("Email ou mot de passe incorrect");
         }
 
+        // Connexion réussie : le serveur garde l'administrateur dans sa session
+        session.connecter(admin.getId(), admin.getEmail(), "ADMIN", request, response);
         return ResponseEntity.ok(admin);
     }
 }
