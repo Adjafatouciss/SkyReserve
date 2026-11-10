@@ -39,7 +39,8 @@ public class Admin {
 
     @NotBlank(message = "Mot de passe obligatoire")
     @Column(nullable = false, length = 100)
-    @JsonProperty("motDePasse")
+    // WRITE_ONLY : le mot de passe est accepté en entrée, mais jamais renvoyé par l'API
+    @JsonProperty(value = "motDePasse", access = JsonProperty.Access.WRITE_ONLY)
     private String motDePasse;
 
     @Column(length = 30)

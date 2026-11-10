@@ -11,7 +11,7 @@ function editUser(encoded) {
   document.getElementById("nom").value = user.nom;
   document.getElementById("prenom").value = user.prenom;
   document.getElementById("email").value = user.email;
-  document.getElementById("motDePasse").value = user.motDePasse;
+  document.getElementById("motDePasse").value = ""; // laisser vide pour garder le mot de passe actuel
   document.getElementById("telephone").value = user.telephone || "";
   showMessage("userMessage", `Mode modification activé pour l'utilisateur #${user.id}`, false);
 }
@@ -49,7 +49,7 @@ async function saveUser() {
     telephone: document.getElementById("telephone").value.trim()
   };
 
-  if (!payload.nom || !payload.prenom || !payload.email || !payload.motDePasse) {
+  if (!payload.nom || !payload.prenom || !payload.email || (!id && !payload.motDePasse)) {
     showMessage("userMessage", "Veuillez remplir les champs obligatoires.");
     return;
   }

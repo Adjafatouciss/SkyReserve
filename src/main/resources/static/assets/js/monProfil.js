@@ -40,7 +40,7 @@ async function modifierProfil() {
         prenom: document.getElementById('prenom').value.trim(),
         email: document.getElementById('email').value.trim(),
         telephone: document.getElementById('telephone').value.trim(),
-        motDePasse: nouveauMotDePasse || actuel.motDePasse
+        motDePasse: nouveauMotDePasse // vide = le serveur garde le mot de passe actuel
       })
     });
 

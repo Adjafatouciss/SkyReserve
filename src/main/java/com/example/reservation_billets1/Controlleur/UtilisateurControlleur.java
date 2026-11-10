@@ -56,7 +56,10 @@ public class UtilisateurControlleur {
                                                  BindingResult result){
 
         // Vérification des champs
-        if(result.hasErrors()){
+        // En modification, laisser le mot de passe vide = garder l'ancien
+        boolean erreurs = result.getFieldErrors().stream()
+                .anyMatch(e -> !e.getField().equals("motDePasse"));
+        if (erreurs) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 

@@ -45,7 +45,10 @@ public class UtilisateurServices {
         User.setNom(U.getNom());
         User.setPrenom(U.getPrenom());
         User.setEmail(U.getEmail());
-        User.setMotDePasse(U.getMotDePasse());
+        // Nouveau mot de passe seulement s'il a été saisi
+        if (U.getMotDePasse() != null && !U.getMotDePasse().isBlank()) {
+            User.setMotDePasse(U.getMotDePasse());
+        }
         User.setTelephone(U.getTelephone());
         User.setRole(Utilisateur.ROLE_UTILISATEUR);
 

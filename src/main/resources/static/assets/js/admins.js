@@ -11,7 +11,7 @@ function editAdmin(encoded) {
   document.getElementById("nom").value = admin.nom;
   document.getElementById("prenom").value = admin.prenom;
   document.getElementById("email").value = admin.email;
-  document.getElementById("motDePasse").value = admin.motDePasse;
+  document.getElementById("motDePasse").value = ""; // laisser vide pour garder le mot de passe actuel
   showMessage("adminMessage", `Mode modification activé pour l'admin #${admin.id}`, false);
 }
 
@@ -46,7 +46,7 @@ async function saveAdmin() {
     motDePasse: document.getElementById("motDePasse").value.trim()
   };
 
-  if (!payload.nom || !payload.prenom || !payload.email || !payload.motDePasse) {
+  if (!payload.nom || !payload.prenom || !payload.email || (!id && !payload.motDePasse)) {
     showMessage("adminMessage", "Veuillez remplir tous les champs.");
     return;
   }

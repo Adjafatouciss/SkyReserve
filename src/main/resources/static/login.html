@@ -10,6 +10,15 @@
   <div class="auth-card">
     <h1>Connexion Admin</h1>
     <p>Accède à la plateforme complète de gestion des administrateurs, utilisateurs, compagnies, avions, aéroports, vols, réservations, billets et paiements.</p>
+    <!-- Compte de démonstration pour les visiteurs du portfolio -->
+    <div class="demo-box" style="margin:0 0 20px;padding:12px 14px;border:1px dashed #7c3aed;border-radius:8px;background:rgba(124,58,237,0.10);font-size:13px;line-height:1.6;text-align:left;color:inherit;">
+        <strong style="color:#7c3aed;">Compte de démonstration</strong><br>
+        Courriel : admin@skyreserve.ca<br>
+        Mot de passe : demo1234
+        <button type="button" onclick="document.getElementById('email').value='admin@skyreserve.ca';document.getElementById('password').value='demo1234';"
+                style="display:block;width:auto;margin-top:8px;padding:6px 12px;font-size:13px;">Remplir automatiquement</button>
+    </div>
+
     <div class="form-group">
       <label for="email">Email</label>
       <input type="email" id="email" placeholder="admin@email.com">

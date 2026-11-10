@@ -41,7 +41,10 @@ public class AdminServices {
         adminExistant.setNom(admin.getNom());
         adminExistant.setPrenom(admin.getPrenom());
         adminExistant.setEmail(admin.getEmail());
-        adminExistant.setMotDePasse(admin.getMotDePasse());
+        // Nouveau mot de passe seulement s'il a été saisi
+        if (admin.getMotDePasse() != null && !admin.getMotDePasse().isBlank()) {
+            adminExistant.setMotDePasse(admin.getMotDePasse());
+        }
         adminExistant.setRole(Admin.ROLE_ADMIN);
 
         return adminRepository.save(adminExistant);

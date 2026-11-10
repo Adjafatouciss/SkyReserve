@@ -42,7 +42,10 @@ public class AdminControlleur {
     public ResponseEntity<?> modifierAdmin(@PathVariable Long id,
                                            @Valid @RequestBody Admin A,
                                            BindingResult result) {
-        if (result.hasErrors()) {
+        // En modification, laisser le mot de passe vide = garder l'ancien
+        boolean erreurs = result.getFieldErrors().stream()
+                .anyMatch(e -> !e.getField().equals("motDePasse"));
+        if (erreurs) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 

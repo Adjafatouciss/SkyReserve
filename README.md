@@ -91,7 +91,16 @@ Sous Windows : `mvnw.cmd spring-boot:run`
 - Espace voyageur : http://localhost:8080/Reservation_Billets/LoginUtilisateur.html
 - Espace administrateur : http://localhost:8080/Reservation_Billets/login.html
 
-### 5. Créer un premier administrateur
+### 5. Données de démonstration (optionnel)
+
+Avec la variable `DEMO_DATA=true`, l'application crée au démarrage des compagnies, des avions, des aéroports, des vols, ainsi que deux comptes de test :
+
+| Espace | Courriel | Mot de passe |
+|---|---|---|
+| Voyageur | demo@skyreserve.ca | demo1234 |
+| Administrateur | admin@skyreserve.ca | demo1234 |
+
+### 6. Créer un premier administrateur (sans données de démonstration)
 
 Avec Postman, envoyer une requête `POST` à
 `http://localhost:8080/Reservation_Billets/api/reservationBillets/ajouterAdmin` :
@@ -109,9 +118,25 @@ Ordre conseillé pour créer les données de test : compagnies → avions → a�
 
 ---
 
+## Déploiement en ligne
+
+Le projet contient un `Dockerfile` pour être déployé sur [Render](https://render.com) avec une base MySQL hébergée sur [Aiven](https://aiven.io).
+
+Variables d'environnement à définir sur Render :
+
+| Variable | Exemple |
+|---|---|
+| `DB_URL` | `jdbc:mysql://<hôte>:<port>/defaultdb?sslMode=REQUIRED` |
+| `DB_USERNAME` | `avnadmin` |
+| `DB_PASSWORD` | le mot de passe fourni par Aiven |
+| `DEMO_DATA` | `true` |
+| `SHOW_SQL` | `false` |
+
+---
+
 ## Améliorations prévues
 
-- Chiffrement des mots de passe avec BCrypt
+- Chiffrement des mots de passe avec BCrypt (les mots de passe ne sont déjà plus renvoyés par l'API)
 - Authentification côté serveur avec Spring Security
 - Tests unitaires et d'intégration
 
